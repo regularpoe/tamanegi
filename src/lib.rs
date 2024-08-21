@@ -17,7 +17,7 @@ use std::str::FromStr;
 
 #[derive(Debug, PartialEq)]
 pub struct Finding {
-    pub secret_token: Option<String>,
+    pub finding: Option<String>,
     pub secret: Option<String>,
     pub rule_id: Option<String>,
     pub entropy: Option<f64>,
@@ -54,7 +54,7 @@ fn parse_u32<'a>(input: &'a str) -> IResult<&'a str, Option<u32>> {
 }
 
 pub fn parse_finding(input: &str) -> IResult<&str, Finding> {
-    let (input, secret_token) = parse_line("Finding: ")(input)?;
+    let (input, finding) = parse_line("Finding: ")(input)?;
     let (input, _) = line_ending(input)?;
     let (input, secret) = parse_line("Secret: ")(input)?;
     let (input, _) = line_ending(input)?;
@@ -80,7 +80,7 @@ pub fn parse_finding(input: &str) -> IResult<&str, Finding> {
     Ok((
         input,
         Finding {
-            secret_token,
+            finding,
             secret,
             rule_id,
             entropy,
